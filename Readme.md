@@ -12,5 +12,5 @@ To start with the project, download the files or clone the repo then:-
 ## Tech used are
     *nodejs
     *expressjs
-    *mongodb(mlab)
+    *mongodb(atlas)
 
