@@ -1,22 +1,43 @@
 const graphql = require("graphql");
 
-const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLSchema, GraphQLID, GraphQLList } = graphql;
 // dummy data for testing
 const books = [
 	{
 		id: 1,
 		name: "Name of the Wind",
 		genre: "Fantasy",
+        authorId: "2"
 	},
 	{
 		id: 2,
-		name: "Name of the Wind",
-		genre: "Fantasy",
+		name: "End of Watch",
+		genre: "Science Fiction",
+        authorId: "1"
 	},
 	{
 		id: 3,
-		name: "Name of the Wind",
+		name: "Night of the Living Dead",
 		genre: "Fantasy",
+        authorId: "2"
+	},
+	{
+		id: 4,
+		name: "Wakanda",
+		genre: "Fantasy science fiction",
+        authorId: "2"
+	},
+	{
+		id: 5,
+		name: "The Hobbit",
+		genre: "Fantasy",
+        authorId: "1"
+	},
+	{
+		id: 6,
+		name: "A Game of Thrones",
+		genre: "Fantasy",
+        authorId: "2"
 	},
 ];
 
@@ -39,6 +60,12 @@ const BookType = new GraphQLObjectType({
 		id: { type: GraphQLID },
 		name: { type: GraphQLString },
 		genre: { type: GraphQLString },
+        author: {
+            type: AuthorType,
+            resolve(parent, args) {
+                return authors.find(author => author.id === parent.authorId);
+            }
+        }
 	}),
 });
 
@@ -48,6 +75,12 @@ const AuthorType = new GraphQLObjectType({
 		id: { type: GraphQLID },
 		name: { type: GraphQLString },
 		age: { type: GraphQLString },
+        books: {
+            type: new GraphQLList(BookType),
+            resolve(parent, args) {
+                return books.filter(book => book.authorId === parent.id); 
+            }
+        }
 	}),
 });
 
@@ -68,6 +101,18 @@ const RootQuery = new GraphQLObjectType({
 				return authors.find((e) => e.id == args.id);
 			},
 		},
+        books: {
+            type: new GraphQLList(BookType),
+            resolve(parent, args) {
+                return books;
+            }
+        },
+        authors: {
+            type: new GraphQLList(AuthorType),
+            resolve(parent, args) {
+                return authors;
+            }
+        }
 	},
 });
 
