@@ -90,7 +90,7 @@ const Mutation = new GraphQLObjectType({
 				return author.save();
 			},
 		},
-		addBoook: {
+		addBook: {
 			type: BookType,
 			args: {
 				name: { type: new GraphQLNonNull(GraphQLString) },
@@ -104,6 +104,15 @@ const Mutation = new GraphQLObjectType({
 					authorId: args.authorId,
 				});
 				return book.save();
+			},
+		},
+		deleteBook: {
+			type: BookType,
+			args: {
+				id: { type: new GraphQLNonNull(GraphQLID) },
+			},
+			resolve(parent, args) {
+				return books.findByIdAndRemove(args.id);
 			},
 		},
 	},
