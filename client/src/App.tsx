@@ -1,24 +1,10 @@
 import React from "react";
-import {
-	ChakraProvider,
-	Box,
-	theme,
-	VStack,
-} from "@chakra-ui/react";
-import { useQuery, gql } from "@apollo/client";
+import { ChakraProvider, Box, theme, VStack } from "@chakra-ui/react";
+import { useQuery } from "@apollo/client";
 import Book from "./components/Book";
 import AddBook from "./components/AddBook";
-import BookItem from './components/BookItem';
-
-const GET_BOOKS = gql`
-	query GetBooks {
-		books {
-			id
-			name
-			genre
-		}
-	}
-`;
+import BookItem from "./components/BookItem";
+import { GET_BOOKS } from "./graphql/queries";
 
 const App: React.FC = (): JSX.Element => {
 	const { loading, error, data } = useQuery(GET_BOOKS);

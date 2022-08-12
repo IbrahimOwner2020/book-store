@@ -1,6 +1,7 @@
 import React from "react";
 import { Heading, Box, Text, Button } from "@chakra-ui/react";
-import { gql, useMutation } from "@apollo/client";
+import { useMutation } from "@apollo/client";
+import { DELETE_BOOK } from "../graphql/mutations";
 
 type Book = {
 	name: string;
@@ -8,19 +9,11 @@ type Book = {
 	genre: string;
 };
 
-const DELETE_BOOK = gql`
-	mutation DeleteBook($id: ID!) {
-		deleteBook(id: $id) {
-			name
-		}
-	}
-`;
-
 const BookItem: React.FC<{ book: Book }> = ({ book }): JSX.Element => {
 	const [deleteBook, { loading, error, data }] = useMutation(DELETE_BOOK, {
 		refetchQueries: ["GetBooks"],
 	});
-    console.log(data)
+	console.log(data);
 	console.log(loading);
 	console.log(error);
 
@@ -30,8 +23,8 @@ const BookItem: React.FC<{ book: Book }> = ({ book }): JSX.Element => {
 			<Text mt={4}>{book.genre}</Text>
 			<Button
 				onClick={() => {
-                    console.log(book.id)
-                    console.log(`Deleting ${book.name}`)
+					console.log(book.id);
+					console.log(`Deleting ${book.name}`);
 					deleteBook({
 						variables: {
 							id: book.id,
