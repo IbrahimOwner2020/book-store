@@ -1,21 +1,7 @@
 import React from "react";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { Box, Heading } from "@chakra-ui/react";
-
-const GET_BOOK = gql`
-	query GetBook($id: ID!) {
-		book(id: $id) {
-			name
-			genre
-            id 
-            author {
-                id
-                name
-                age
-            }
-		}
-	}
-`;
+import { GET_BOOK } from "./../graphql/queries";
 
 const Book = (): JSX.Element => {
 	const { loading, error, data } = useQuery(GET_BOOK, {

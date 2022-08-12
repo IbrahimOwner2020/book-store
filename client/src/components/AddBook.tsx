@@ -6,22 +6,8 @@ import {
 	Input,
 	Button,
 } from "@chakra-ui/react";
-import { useMutation, gql } from "@apollo/client";
-
-const ADD_BOOK = gql`
-	mutation AddBook($name: String!, $genre: String!, $authorId: ID!) {
-		addBook(name: $name, genre: $genre, authorId: $authorId) {
-			id
-			name
-			genre
-			author {
-				name
-				age
-				id
-			}
-		}
-	}
-`;
+import { useMutation } from "@apollo/client";
+import { ADD_BOOK } from "../graphql/mutations";
 
 type Form = {
 	name: string;
@@ -33,13 +19,13 @@ const AddBook = (): JSX.Element => {
 	const {
 		handleSubmit,
 		register,
-        reset,
+		reset,
 		formState: { errors, isSubmitting },
 	} = useForm<Form>();
 
 	const [addBook, { data, loading, error }] = useMutation(ADD_BOOK, {
-        refetchQueries: ["GetBooks"],
-    });
+		refetchQueries: ["GetBooks"],
+	});
 	console.log(data);
 	console.log(loading);
 	console.log(error);
@@ -48,7 +34,7 @@ const AddBook = (): JSX.Element => {
 		addBook({
 			variables: values,
 		});
-        reset();
+		reset();
 	};
 
 	return (
