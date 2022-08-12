@@ -8,7 +8,11 @@ require("dotenv").config();
 const app = express();
 connectDB();
 
-app.use(cors());
+var corsOptions = {
+	origin: "http://localhost:3000",
+};
+
+app.use(cors(corsOptions));
 
 app.use(
 	"/graphql",
@@ -19,11 +23,11 @@ app.use(
 );
 
 app.get("/", (req, res) => {
-    res.send("Server for Book list Project has started")
-})
+	res.send("Server for Book list Project has started");
+});
 
 app.listen(4000, () => {
 	console.log("Server is running on port 4000");
 });
 
-module.exports = app
+module.exports = app;
