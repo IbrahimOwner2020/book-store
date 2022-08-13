@@ -8,8 +8,9 @@ const container = document.getElementById("root");
 if (!container) throw new Error("Failed to find the root element");
 const root = ReactDOM.createRoot(container);
 
+console.log(process.env.REACT_APP_BACKEND_URI)
 const client = new ApolloClient({
-	uri: "https://book-store-server-v2.vercel.app/graphql",
+	uri: process.env.REACT_APP_BACKEND_URI,
 	cache: new InMemoryCache(),
 });
 

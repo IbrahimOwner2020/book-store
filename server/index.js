@@ -8,11 +8,7 @@ require("dotenv").config();
 const app = express();
 connectDB();
 
-var corsOptions = {
-	origin: "http://localhost:3000",
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(
 	"/graphql",
